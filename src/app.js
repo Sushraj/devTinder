@@ -2,19 +2,24 @@ const express = require("express");
 
 const app = express();  // creating new web server
 
-
-app.use("/",(req,res) => {
-    res.send("Namaste From the sushant!");
+ // GET API example
+app.get("/user",(req,res) => {
+    res.send("get Data");
 })
 
-app.use("/hello",(req,res) => {
-    res.send("Hello From the hello!");
-})
+// POST API example
+ app.post('/user', (req, res) => { 
+     res.send(`Hello, you are creating something!`);
+});
 
-app.use("/test",(req,res) => {
-    res.send("Hello From the test!");
-})
+// DELETE API example
+app.delete('/user', (req, res) => { 
+    res.send(`Hello, you are deleting something!`);
+});
 
+app.use("/user",(req,res) => {
+    res.send("HAAAAA");
+})
 app.listen(3000,() => {
-    console.log("server running on port 3000");
+    console.log("server running on port 7000");
 });
