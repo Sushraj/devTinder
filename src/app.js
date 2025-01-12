@@ -34,6 +34,7 @@ app.get("/feed", async (req, res) => {
   }
 });
 
+//get User By emailID
 app.get("/getUserByEmaiId", async (req, res) => {
   const userEmail = req.body.emailId;
 
@@ -49,6 +50,7 @@ app.get("/getUserByEmaiId", async (req, res) => {
   }
 });
 
+// findOne user
 app.get("/getUserByEmaiIdFindOne", async (req, res) => {
   const userEmail = req.body.emailId;
 
@@ -61,6 +63,47 @@ app.get("/getUserByEmaiIdFindOne", async (req, res) => {
     }
   } catch (err) {
     res.status(400).send("something went wrong!!");
+  }
+});
+
+//get User By ID
+app.get("/getUserById", async (req, res) => {
+  const userId = req.body._id;
+  try {
+    const user = await User.findOne({ _id: userId });
+    if (user.length === 0) {
+      res.status(404).send("User not found!");
+    } else {
+      res.send({ success: true, data: user });
+    }
+  } catch (err) {
+    res.status(400).send("something went wrong!!");
+  }
+});
+
+//Delete user from database
+app.delete('/user',async(req,res) => {
+  const userId = req.body._id;
+
+  try{
+   // const user = await User.findByIdAndDelete({_id: userId})
+   const user = await User.findByIdAndDelete(userId)
+    res.send("user deleted successfully!")
+  }catch (err){
+  res.status(400).send("Something went wrong!!")
+  }
+});
+
+//Update data of the user
+app.patch('/user',async(req,res) => {
+  const userId = req.body._id;
+  const data = req.body;
+  try{
+   // const user = await User.findByIdAndDelete({_id: userId})
+    await User.findByIdAndUpdate(userId ,data)
+    res.send("user Updated successfully!")
+  }catch (err){
+  res.status(400).send("Something went wrong!!")
   }
 });
 
