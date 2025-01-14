@@ -12,9 +12,9 @@ app.post("/signup", async (req, res) => {
 
   try {
     await user.save();
-    res.send("user added successfully!!");
+    res.status(200).send("user added successfully!!");
   } catch (err) {
-    res.status(400).send("Error saving the user:", +err.message);
+    res.status(400).send("Error saving the user:" + err.message);
   }
 });
 
@@ -82,28 +82,44 @@ app.get("/getUserById", async (req, res) => {
 });
 
 //Delete user from database
-app.delete('/user',async(req,res) => {
+app.delete("/user", async (req, res) => {
   const userId = req.body._id;
 
-  try{
-   // const user = await User.findByIdAndDelete({_id: userId})
-   const user = await User.findByIdAndDelete(userId)
-    res.send("user deleted successfully!")
-  }catch (err){
-  res.status(400).send("Something went wrong!!")
+  try {
+    // const user = await User.findByIdAndDelete({_id: userId})
+    const user = await User.findByIdAndDelete(userId);
+    res.send("user deleted successfully!");
+  } catch (err) {
+    res.status(400).send("Something went wrong!!");
   }
 });
 
 //Update data of the user
-app.patch('/user',async(req,res) => {
-  const userId = req.body._id;
+app.patch("/user/:userId", async (req, res) => {
+  const userId = req.params?.userId;
   const data = req.body;
-  try{
-   // const user = await User.findByIdAndDelete({_id: userId})
-    await User.findByIdAndUpdate(userId ,data)
-    res.send("user Updated successfully!")
-  }catch (err){
-  res.status(400).send("Something went wrong!!")
+
+  try {
+    const ALLOWED_UPDATES = ["skills", "photoUrl", "about", "gender", "age"];
+    const isUpdateAllowed = Object.keys(data).every((k) =>
+      ALLOWED_UPDATES.includes(k)
+    );
+    if (!isUpdateAllowed) {
+      throw new Error("Update not allowed");
+    }
+
+    if(data?.skills.length > 10) {
+      throw new Error("skills cant be more than 10")
+    }
+
+    // const user = await User.findByIdAndDelete({_id: userId})
+    await User.findByIdAndUpdate(userId, data, {
+      returnDocument: "after",
+      runValidators: true,
+    });
+    res.send("user Updated successfully!");
+  } catch (err) {
+    res.status(400).send("Update failed:" + err.message);
   }
 });
 
