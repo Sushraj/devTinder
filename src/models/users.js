@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const validator = require("validator");
 
 function arrayLimit(val) { return val.length > 0 && val.length < 5; }
 
@@ -17,7 +18,12 @@ const userSchema = new mongoose.Schema({
         required: true,
         unique: true,
         lowercase: true,
-        trim: true
+        trim: true,
+        validate(value) {
+            if(!validator.isEmail(value)){
+                throw new Error("Invalid Email Address:"+ value)
+            }
+        }
     },
     password: {
         type: String,
@@ -37,7 +43,12 @@ const userSchema = new mongoose.Schema({
     },
     photoUrl: {
         type: String,
-        default: "https://toppng.com/public/uploads/preview/donna-picarro-dummy-avatar-115633298255iautrofxa.png"
+        default: "https://toppng.com/public/uploads/preview/donna-picarro-dummy-avatar-115633298255iautrofxa.png",
+        validate(value) {
+            if(!validator.isURL(value)){
+                throw new Error("Invalid Photo URL address:" + value);
+            }
+        }
     },
     about : {
         type: String,
