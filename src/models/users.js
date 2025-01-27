@@ -1,7 +1,10 @@
 const mongoose = require('mongoose');
 const validator = require("validator");
 
-function arrayLimit(val) { return val.length > 0 && val.length < 5; }
+function arrayLimit(val) { 
+    console.log("val,",val);
+    return val.length >= 1 && val.length <= 5; 
+}
 
 const userSchema = new mongoose.Schema({
     firstName: {
@@ -56,7 +59,10 @@ const userSchema = new mongoose.Schema({
     },
     skills: {
         type: [String],
-        validate: [arrayLimit,"Must provide  skills beetween 1 to 5"]
+        // validate:{
+        //     validator:arrayLimit,
+        //     message:"Must provide  skills beetween 1 to 5"
+        // }
     }
 
 },{timestamps: true});

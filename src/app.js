@@ -2,19 +2,58 @@ const express = require("express");
 const connectDB = require("./config/database");
 const app = express(); // creating new web server
 const User = require("./models/users");
+const { validateSignUpData } = require("./utils/validation");
+const bcrypt = require("bcrypt");
 
 // Middleware to parse JSON
 app.use(express.json());
 
+// signup api
 app.post("/signup", async (req, res) => {
-  //create new instance of User model and Access the parsed JSON data
-  const user = new User(req.body);
-
   try {
+    //Validation of data
+    validateSignUpData(req);
+    const { firstName, lastName, emailId, password } = req.body;
+
+    //encrypt password
+    const passwordHash = await bcrypt.hash(password, 10);
+
+    console.log(passwordHash);
+
+    const user = new User({
+      firstName,
+      lastName,
+      emailId,
+      password: passwordHash,
+    });
+
     await user.save();
     res.status(200).send("user added successfully!!");
   } catch (err) {
-    res.status(400).send("Error saving the user:" + err.message);
+    res.status(400).send("ERROR : " + err.message);
+  }
+});
+
+//login api
+app.post("/login", async (req, res) => {
+  try {
+    const { emailId, password } = req.body;
+
+    const user = await User.findOne({ emailId: emailId });
+    if (!user) {
+      throw new Error("Invalid credentils");
+    }
+
+    const isPasswordValid = await bcrypt.compare(password, user.password);
+
+    if (isPasswordValid) {
+      // const token = createToken({ id: user.id });
+      res.send("User Login Successfull!!");
+    } else {
+      throw new Error("Invalid credentils");
+    }
+  } catch (err) {
+    res.status(400).send("ERROR : " + err.message);
   }
 });
 
@@ -108,8 +147,8 @@ app.patch("/user/:userId", async (req, res) => {
       throw new Error("Update not allowed");
     }
 
-    if(data?.skills.length > 10) {
-      throw new Error("skills cant be more than 10")
+    if (data?.skills.length > 10) {
+      throw new Error("skills cant be more than 10");
     }
 
     // const user = await User.findByIdAndDelete({_id: userId})
