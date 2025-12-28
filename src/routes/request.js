@@ -19,6 +19,14 @@ requestRouter.post(
         return res.status(400).json({message: "Invalid Status type: "+ status});
       }
 
+
+
+      const toUser = await User.findById(toUserId);
+
+      if(!toUserId){
+        return res.status(404).json({message: "User not found!"});
+      }
+
       //If there is an existing ConnectionRequest
       const existingConnectionRequest = await ConnectionRequest.findOne({
         $or:[
@@ -46,8 +54,6 @@ requestRouter.post(
     } catch (err) {
       res.status(400).send("ERROR :" + err.message);
     }
-
-    res.send(user.firstName + "sent the connect request!");
   }
 );
 
