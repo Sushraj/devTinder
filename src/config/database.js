@@ -1,8 +1,8 @@
 const mongoose = require("mongoose");
 
 const connectDB = async ()  => {
-    await mongoose.connect(
-        "mongodb+srv://sushantrajhans:rAlFAR73lWWOAMg4@namstenode311220024.6yhum.mongodb.net/")
+    console.log("variable set--->",process.env.DB_CONNECTION_SCRET )
+    await mongoose.connect(process.env.DB_CONNECTION_SCRET);
 };
 
 

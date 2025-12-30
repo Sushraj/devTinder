@@ -7,6 +7,8 @@ const bcrypt = require("bcrypt");
 const cookieParser = require("cookie-parser");
 const jwt = require("jsonwebtoken");
 const { userAuth } = require("./middlewares/auth");
+require('dotenv').config();
+
 
 app.use(express.json());
 app.use(cookieParser());
@@ -22,8 +24,8 @@ app.use("/", requestRouter);
 connectDB()
   .then(() => {
     console.log("Database connection established...");
-    app.listen(7777, () => {
-      console.log("Server is successfully listening on port 7777...");
+    app.listen(process.env.PORT, () => {
+      console.log("Server is successfully listening on port ..." ,`${process.env.PORT}`);
     });
   })
   .catch((err) => {

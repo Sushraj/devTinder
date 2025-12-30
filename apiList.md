@@ -95,6 +95,16 @@ Status : ignore, intrested, accepted, rejected
      - After nginx configuration changes please restart nginx server using below command $ sudo systemctl restart nginx.
 
 
+ ### Domain name configuration ###
+
+     - Purchased domain name from Godaddy.
+     - signup on cloudflare & add new domain name.
+     - change nameservers on godaddy and point it to cloudflare.
+     - wait for sometime till your nameservers are updated ~ 15 minutes.    
+     - DNS records : A devtinder.in your IP address.
+     - by default domain name attached with random IP change it to your AWS ec2 instance IP address.
+     - Enable SSl for websites.
+
 
 
   
