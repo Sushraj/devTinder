@@ -16,9 +16,8 @@
 
 
 ## userRouter
-
+-GET/user/requests/received
 -GET /user/connections
--GET /user/requests
 -GET /user/feed - gets you the profiles of other users on platform
 
 Status : ignore, intrested, accepted, rejected
