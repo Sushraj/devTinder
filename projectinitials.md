@@ -8,10 +8,9 @@ To run the Development UI Server
 
 node src/app.js -->
 
+## nodemon
 
+nodemon is a development utility that automatically restarts your Node.js application whenever it detects file changes in your project.
+your current directory should be DEVTINDER then ,in terminal hit below cammand.
 
----------------
-
-your current directory should be DEVTINDER in terminal then hit below cammand
-
-nodemon src/app.js
+DEVTINDER> nodemon src/app.js
