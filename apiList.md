@@ -19,6 +19,13 @@
 -GET/user/requests/received
 -GET /user/connections
 -GET /user/feed - gets you the profiles of other users on platform
+   1 .  Dont show below User cards in feed API 
+   Own profile,
+   Connected profiles, 
+   Requested profiles,
+   Ignored profiles, 
+   Interested profiles, 
+   
 
 Status : ignore, intrested, accepted, rejected
 

@@ -19,8 +19,6 @@ requestRouter.post(
         return res.status(400).json({message: "Invalid Status type: "+ status});
       }
 
-
-
       const toUser = await User.findById(toUserId);
 
       if(!toUserId){
@@ -48,7 +46,7 @@ requestRouter.post(
       const data = await connectionRequest.save();
 
       res.json({
-        message: "Connection Request sent Successfully!",
+        message: req.user.firstName + " is " + status + " in " + toUser.firstName,
         data,
       });
     } catch (err) {
