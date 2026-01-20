@@ -24,6 +24,7 @@ const authRouter = require("./routes/auth");
 const profileRouter = require("./routes/profile");
 const requestRouter = require("./routes/request");
 const userRouter = require("./routes/user");
+const initializeSocket = require("./utils/socket");
 
 app.use("/", authRouter);
 app.use("/", profileRouter);
@@ -31,24 +32,7 @@ app.use("/", requestRouter);
 app.use("/", userRouter);
 
 const server = http.createServer(app);
-const socket = require("socket.io");
-const io = socket(server, {
-  cors: {
-    origin: "http://localhost:5173",
-    methods: ["GET", "POST"],
-  },
-});
-
-io.on("connection", (socket) => {
-  console.log("New client connected", socket.id);
-  socket.on("joinRoom", (room) => {
-    socket.join(room);
-  });
-
-  io.on("disconnect", () => {
-    console.log("Client disconnected");
-  });
-});
+initializeSocket(server);
 
 connectDB()
   .then(() => {
