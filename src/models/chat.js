@@ -12,7 +12,8 @@ const messageSchema = new mongoose.Schema(
       required: true,
     },
   },
-  { timestamps: true }
+  { timestamps: true },
+  { photoUrl: String }
 );
 
 const chatSchema = new mongoose.Schema({
