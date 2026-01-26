@@ -15,7 +15,7 @@ app.use(
   cors({
     origin: "http://localhost:5173",
     credentials: true,
-  })
+  }),
 );
 app.use(express.json());
 app.use(cookieParser());
@@ -42,7 +42,7 @@ connectDB()
     server.listen(process.env.PORT, () => {
       console.log(
         "Server is successfully listening on port ...",
-        `${process.env.PORT}`
+        `${process.env.PORT}`,
       );
     });
   })

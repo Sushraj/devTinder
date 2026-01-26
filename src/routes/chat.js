@@ -5,7 +5,6 @@ const chatRouter = express.Router();
 
 chatRouter.get("/chat/:targetUserId", userAuth, async (req, res) => {
   const { targetUserId } = req.params;
-  console.log("user request:", req.user);
   const userId = req.user._id;
 
   try {
@@ -28,6 +27,4 @@ chatRouter.get("/chat/:targetUserId", userAuth, async (req, res) => {
   }
 });
 
-
-
-module.exports =  chatRouter;
+module.exports = chatRouter;

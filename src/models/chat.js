@@ -13,7 +13,7 @@ const messageSchema = new mongoose.Schema(
     },
   },
   { timestamps: true },
-  { photoUrl: String }
+  { photoUrl: String },
 );
 
 const chatSchema = new mongoose.Schema({
